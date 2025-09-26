@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ChatGPT - Suno AI 노래만들기 프롬프트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 50%, #42a5f5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+            border-radius: 20px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b 0%, #42a5f5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .guide-section {
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .guide-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(255, 167, 38, 0.1) 100%);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 16px;
+            flex-shrink: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .main-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+            color: white;
+            border: none;
+            padding: 18px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            margin-top: 20px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        .main-button:active {
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 107, 107, 0.2);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #42a5f5 0%, #ab47bc 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 4px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 24px 20px;
+                border-radius: 16px;
+                margin: 0;
+            }
+            
+            .icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 12px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+                margin-bottom: 32px;
+                line-height: 1.5;
+            }
+            
+            .guide-section {
+                margin: 32px 0;
+            }
+            
+            .guide-title {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .step {
+                padding: 12px 16px;
+                margin-bottom: 16px;
+                border-radius: 10px;
+            }
+            
+            .step-number {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+                margin-right: 12px;
+                flex-shrink: 0;
+            }
+            
+            .step-text {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+            
+            .main-button {
+                width: 100%;
+                padding: 16px 24px;
+                font-size: 1.1rem;
+                border-radius: 12px;
+                margin-top: 24px;
+            }
+            
+            .footer {
+                margin-top: 24px;
+                padding-top: 20px;
+                font-size: 0.85rem;
+            }
+
+            .feature-badge {
+                font-size: 0.8rem;
+                padding: 5px 12px;
+                margin: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .description {
+                font-size: 0.9rem;
+            }
+            
+            .step {
+                padding: 12px;
+            }
+            
+            .step-number {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+                margin-right: 10px;
+            }
+            
+            .step-text {
+                font-size: 0.95rem;
+            }
+            
+            .main-button {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+
+            .feature-badge {
+                font-size: 0.75rem;
+                padding: 4px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🎵</div>
+        
+        <h1>ChatGPT - Suno AI 노래만들기 프롬프트</h1>
+        <p class="subtitle">작성자: mindwiredai.com</p>
+        <p class="description">Suno AI를 활용한 전문적인 음악 생성을 위한 프롬프트 제작 도구입니다.</p>
+        
+        <div class="features">
+            <div class="feature-badge">프롬프트 최적화</div>
+            <div class="feature-badge">장르별 가이드</div>
+            <div class="feature-badge">가사 생성</div>
+            <div class="feature-badge">음악 구조 설계</div>
+        </div>
+        
+        <div class="guide-section">
+            <h3 class="guide-title">📖 사용 가이드</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">ChatGPT 앱을 설치한다</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">구글 계정으로 로그인한다</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">접속버튼을 눌러 사용한다</div>
+            </div>
+        </div>
+        
+        <button class="main-button" onclick="handleConnect()">
+            🎤 Suno AI 음악 제작 시작하기
+        </button>
+        
+        <div class="footer">
+            <p>🎶 당신만의 독창적인 음악을 만들어보세요</p>
+        </div>
+    </div>
+
+    <script>
+        function handleConnect() {
+            window.open('https://chatgpt.com/g/g-68ccb3e7b2e4819188f32a982cf3d100-caesgpt-suno-ai-noraemandeulgi-peurompeuteu', '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    step.style.transition = 'all 0.6s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateX(0)';
+                }, index * 200 + 400);
+            });
+        });
+    </script>
+</body>
+</html>
